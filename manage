@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -f env.txt ];then
     environment=`cat env.txt`
