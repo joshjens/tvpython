@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -f env.txt ];then
     environment=`cat env.txt`
@@ -9,7 +9,10 @@ else
 
 fi
 
+echo $WORKON_HOME/$environment/bin/activate
 source $WORKON_HOME/$environment/bin/activate
 
+pushd tvdjango
 python manage.py "$@"
+popd
 
