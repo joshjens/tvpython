@@ -11,5 +11,7 @@ fi
 
 source $WORKON_HOME/$environment/bin/activate
 
+pushd tvdjango
 python manage.py "$@"
+popd
 
