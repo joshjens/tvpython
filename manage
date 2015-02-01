@@ -9,6 +9,7 @@ else
 
 fi
 
+echo $WORKON_HOME/$environment/bin/activate
 source $WORKON_HOME/$environment/bin/activate
 
 pushd tvdjango
