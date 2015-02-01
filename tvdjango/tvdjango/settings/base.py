@@ -1,5 +1,6 @@
 import os
 from unipath import Path
+from django.utils.translation import ugettext_lazy as _
 
 
 PROJECT_ROOT = Path(__file__).ancestor(3)
@@ -31,6 +32,10 @@ TIME_ZONE = "UTC"
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
 
+LANGUAGES = [
+    ('en-us', _('English US')),
+]
+
 SITE_ID = int(os.environ.get("SITE_ID", 1))
 
 
@@ -47,7 +52,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(PACKAGE_ROOT, "site_media", "media")
+MEDIA_ROOT = os.path.join(PROJECT_ROOT.ancestor(1), "site_media", "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -58,7 +63,7 @@ MEDIA_URL = "/site_media/media/"
 # Don"t put anything in this directory yourself; store your static files
 # in apps" "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PACKAGE_ROOT, "site_media", "static")
+STATIC_ROOT = os.path.join(PROJECT_ROOT.ancestor(1), "site_media", "static")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -95,18 +100,26 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     "account.context_processors.account",
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
     "pinax_theme_bootstrap.context_processors.theme",
 ]
 
 
 MIDDLEWARE_CLASSES = [
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 ]
 
 ROOT_URLCONF = "tvdjango.urls"
@@ -118,7 +131,13 @@ TEMPLATE_DIRS = [
     os.path.join(PACKAGE_ROOT, "templates"),
 ]
 
+CMS_TEMPLATES = (
+    ('cmsbase/template_1.html', 'Template One'),
+    ('cmsbase/template_2.html', 'Template Two'),
+)
+
 INSTALLED_APPS = [
+    "suit",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -136,9 +155,35 @@ INSTALLED_APPS = [
     "eventlog",
     "metron",
 
+    # Django CMS
+    'cms',
+    'mptt',
+    'menus',
+    'sekizai',
+    'djangocms_admin_style',
+    'reversion',
+    'cmsbase',
+
     # project
     "tvdjango",
 ]
+
+MIGRATION_MODULES = {
+    'cms': 'cms.migrations_django',
+    'menus': 'menus.migrations_django',
+
+    # Add also the following modules if you're using these plugins:
+    # 'djangocms_file': 'djangocms_file.migrations_django',
+    # 'djangocms_flash': 'djangocms_flash.migrations_django',
+    # 'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    # 'djangocms_inherit': 'djangocms_inherit.migrations_django',
+    # 'djangocms_link': 'djangocms_link.migrations_django',
+    # 'djangocms_picture': 'djangocms_picture.migrations_django',
+    # 'djangocms_snippet': 'djangocms_snippet.migrations_django',
+    # 'djangocms_teaser': 'djangocms_teaser.migrations_django',
+    # 'djangocms_video': 'djangocms_video.migrations_django',
+    # 'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
