@@ -1,0 +1,9 @@
+print("Loading settings from {}".format(__file__))
+
+from tvdjango.settings.dev import *
+
+DATABASES['default']['PASSWORD'] = '<password goes here>'
+
+SECRET_KEY = '<use your own key>'
+
+
