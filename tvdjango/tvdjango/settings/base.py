@@ -164,8 +164,30 @@ INSTALLED_APPS = [
     'reversion',
     'cmsbase',
 
+    # CMS Plugins
+    'djangocms_file',
+    'djangocms_flash',
+    'djangocms_googlemap',
+    'djangocms_inherit',
+    'djangocms_picture',
+    'djangocms_teaser',
+    'djangocms_video',
+    'djangocms_link',
+    #'djangocms_snippet',
+    'djangocms_text_ckeditor',
+
+    #'aldryn_blog',
+    #'aldryn_common',
+    'django_select2',
+    'easy_thumbnails',
+    'filer',
+    'taggit',
+    'hvad',
+
     # project
     "tvdjango",
+    "polls",
+    "polls_plugin",
 ]
 
 MIGRATION_MODULES = {
@@ -173,17 +195,26 @@ MIGRATION_MODULES = {
     'menus': 'menus.migrations_django',
 
     # Add also the following modules if you're using these plugins:
-    # 'djangocms_file': 'djangocms_file.migrations_django',
-    # 'djangocms_flash': 'djangocms_flash.migrations_django',
-    # 'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
-    # 'djangocms_inherit': 'djangocms_inherit.migrations_django',
-    # 'djangocms_link': 'djangocms_link.migrations_django',
-    # 'djangocms_picture': 'djangocms_picture.migrations_django',
-    # 'djangocms_snippet': 'djangocms_snippet.migrations_django',
-    # 'djangocms_teaser': 'djangocms_teaser.migrations_django',
-    # 'djangocms_video': 'djangocms_video.migrations_django',
-    # 'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+    'djangocms_file': 'djangocms_file.migrations_django',
+    'djangocms_flash': 'djangocms_flash.migrations_django',
+    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    'djangocms_inherit': 'djangocms_inherit.migrations_django',
+    'djangocms_link': 'djangocms_link.migrations_django',
+    'djangocms_picture': 'djangocms_picture.migrations_django',
+    #'djangocms_snippet': 'djangocms_snippet.migrations_django',
+    'djangocms_teaser': 'djangocms_teaser.migrations_django',
+    'djangocms_video': 'djangocms_video.migrations_django',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
 }
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    #'easy_thumbnails.processors.scale_and_crop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
